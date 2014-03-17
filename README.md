@@ -5,6 +5,16 @@ Note: All of the below came originally from Sandi Metz and Katrina Owen and thei
 Write the code that will output the text to the nursery rhyme
 _The House that Jack Built_.
 
+## Setup
+
+- Checkout repo
+- `bundle install`
+- `rake` or `bundle exec rake`
+
+## Requirements
+
+- Ruby 1.9.3 up to 2.x should be fine. Haven't tried anything else.
+
 ### Test Suite
 
 A failing test suite is provided in `./features/house.feature`.
