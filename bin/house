@@ -1,3 +1,48 @@
 #!/usr/bin/env ruby
 
-puts "Hello, world!"
+class Poem
+  attr_accessor :incidents
+  def initialize(incidents)
+    self.incidents = incidents
+  end
+
+  def lines
+    (1..line_count).map {|e| output_line(e)}
+  end
+
+private
+  def preamble
+    "This is"
+  end
+
+  def output_line(number)
+    "#{preamble} #{events[0..number-1].reverse.join(" ")}.\n\n"
+  end
+
+  def line_count
+    events.count
+  end
+end
+
+def events
+  [
+    "the house that Jack built",
+    "the malt that lay in",
+    "the rat that ate",
+    "the cat that killed",
+    "the dog that worried",
+    "the cow with the crumpled horn that tossed",
+    "the maiden all forlorn that milked",
+    "the man all tattered and torn that kissed",
+    "the priest all shaven and shorn that married",
+    "the rooster that crowed in the morn that woke",
+    "the farmer sowing his corn that kept",
+    "the horse and the hound and the horn that belonged to",
+  ]
+end
+
+print "#{Poem.new(events).lines.join('')}"
+
+#Shuffle actors and verbs separately
+  #the malt that killed
+#Shuffle and always end with "that Jack built"
