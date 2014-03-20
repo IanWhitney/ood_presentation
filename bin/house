@@ -5,22 +5,35 @@ def pause
 end
 
 def phrases
-  ["house that Jack built"]
+  [
+    "house that Jack built",
+    "malt that lay in",
+    "rat that ate",
+    "cat that killed",
+    "dog that worried",
+    "cow with the crumpled horn that tossed",
+    "maiden all forlorn that milked",
+    "man all tattered and torn that kissed",
+    "priest all shaven and shorn that married",
+    "rooster that crowed in the morn that woke",
+    "farmer sowing his corn that kept",
+    "horse and the hound and the horn that belonged to",
+  ]
 end
 
 rhyme= <<-eos
 This is the #{phrases[0]}.#{pause}
-This is the malt that lay in the #{phrases[0]}.#{pause}
-This is the rat that ate the malt that lay in the #{phrases[0]}.#{pause}
-This is the cat that killed the rat that ate the malt that lay in the #{phrases[0]}.#{pause}
-This is the dog that worried the cat that killed the rat that ate the malt that lay in the #{phrases[0]}.#{pause}
-This is the cow with the crumpled horn that tossed the dog that worried the cat that killed the rat that ate the malt that lay in the #{phrases[0]}.#{pause}
-This is the maiden all forlorn that milked the cow with the crumpled horn that tossed the dog that worried the cat that killed the rat that ate the malt that lay in the #{phrases[0]}.#{pause}
-This is the man all tattered and torn that kissed the maiden all forlorn that milked the cow with the crumpled horn that tossed the dog that worried the cat that killed the rat that ate the malt that lay in the #{phrases[0]}.#{pause}
-This is the priest all shaven and shorn that married the man all tattered and torn that kissed the maiden all forlorn that milked the cow with the crumpled horn that tossed the dog that worried the cat that killed the rat that ate the malt that lay in the #{phrases[0]}.#{pause}
-This is the rooster that crowed in the morn that woke the priest all shaven and shorn that married the man all tattered and torn that kissed the maiden all forlorn that milked the cow with the crumpled horn that tossed the dog that worried the cat that killed the rat that ate the malt that lay in the #{phrases[0]}.#{pause}
-This is the farmer sowing his corn that kept the rooster that crowed in the morn that woke the priest all shaven and shorn that married the man all tattered and torn that kissed the maiden all forlorn that milked the cow with the crumpled horn that tossed the dog that worried the cat that killed the rat that ate the malt that lay in the #{phrases[0]}.#{pause}
-This is the horse and the hound and the horn that belonged to the farmer sowing his corn that kept the rooster that crowed in the morn that woke the priest all shaven and shorn that married the man all tattered and torn that kissed the maiden all forlorn that milked the cow with the crumpled horn that tossed the dog that worried the cat that killed the rat that ate the malt that lay in the #{phrases[0]}.#{pause}
+This is the #{phrases[1]} the #{phrases[0]}.#{pause}
+This is the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
+This is the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
+This is the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
+This is the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
+This is the #{phrases[6]} the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
+This is the #{phrases[7]} the #{phrases[6]} the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
+This is the #{phrases[8]} the #{phrases[7]} the #{phrases[6]} the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
+This is the #{phrases[9]} the #{phrases[8]} the #{phrases[7]} the #{phrases[6]} the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
+This is the #{phrases[10]} the #{phrases[9]} the #{phrases[8]} the #{phrases[7]} the #{phrases[6]} the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
+This is the #{phrases[11]} the #{phrases[10]} the #{phrases[9]} the #{phrases[8]} the #{phrases[7]} the #{phrases[6]} the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
 eos
 
 print rhyme
