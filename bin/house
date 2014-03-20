@@ -27,10 +27,11 @@ class RhymePart
 end
 
 class RhymeLine
-  attr_accessor :verse_number
+  attr_accessor :verse_number, :phrases
 
-  def initialize(verse_number)
+  def initialize(verse_number, phrases)
     self.verse_number = verse_number
+    self.phrases = phrases
   end
 
   def to_s
@@ -42,28 +43,24 @@ class RhymeLine
   end
 
   def pause
-    "\n"
+    "\n\n"
   end
 
   def parts
-    (0..verse_number).inject("") {|ret, i|  " " + RhymePart.new(PHRASES[i]).to_s + ret}
+    (0..verse_number).inject("") {|ret, i|  " " + RhymePart.new(phrases[i]).to_s + ret}
   end
 end
 
+class Rhyme
+  attr_accessor :phrases
+  def initialize(phrases=PHRASES)
+    self.phrases = phrases
+  end
 
-rhyme= <<-eos
-#{RhymeLine.new(0).to_s}
-#{RhymeLine.new(1).to_s}
-#{RhymeLine.new(2).to_s}
-#{RhymeLine.new(3).to_s}
-#{RhymeLine.new(4).to_s}
-#{RhymeLine.new(5).to_s}
-#{RhymeLine.new(6).to_s}
-#{RhymeLine.new(7).to_s}
-#{RhymeLine.new(8).to_s}
-#{RhymeLine.new(9).to_s}
-#{RhymeLine.new(10).to_s}
-#{RhymeLine.new(11).to_s}
-eos
+  def say
+    phrases.each_index {|i| print RhymeLine.new(i,phrases)}
+    nil
+  end
+end
 
-print rhyme
+print Rhyme.new.say
