@@ -1,11 +1,6 @@
 #!/usr/bin/env ruby
 
-def pause
-  "\n"
-end
-
-def phrases
-  [
+PHRASES = [
     "house that Jack built",
     "malt that lay in",
     "rat that ate",
@@ -19,11 +14,6 @@ def phrases
     "farmer sowing his corn that kept",
     "horse and the hound and the horn that belonged to",
   ]
-end
-
-def preamble
-  "This is"
-end
 
 class RhymePart
   attr_accessor :phrase
@@ -36,20 +26,44 @@ class RhymePart
   end
 end
 
+class RhymeLine
+  attr_accessor :verse_number
+
+  def initialize(verse_number)
+    self.verse_number = verse_number
+  end
+
+  def to_s
+    "#{preamble}#{parts}.#{pause}"
+  end
+
+  def preamble
+    "This is"
+  end
+
+  def pause
+    "\n"
+  end
+
+  def parts
+    (0..verse_number).inject("") {|ret, i|  " " + RhymePart.new(PHRASES[i]).to_s + ret}
+  end
+end
+
 
 rhyme= <<-eos
-#{preamble} #{RhymePart.new(phrases[0])}.#{pause}
-#{preamble} #{RhymePart.new(phrases[1])} #{RhymePart.new(phrases[0])}.#{pause}
-#{preamble} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
-#{preamble} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
-#{preamble} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
-#{preamble} the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
-#{preamble} the #{phrases[6]} the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
-#{preamble} the #{phrases[7]} the #{phrases[6]} the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
-#{preamble} the #{phrases[8]} the #{phrases[7]} the #{phrases[6]} the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
-#{preamble} the #{phrases[9]} the #{phrases[8]} the #{phrases[7]} the #{phrases[6]} the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
-#{preamble} the #{phrases[10]} the #{phrases[9]} the #{phrases[8]} the #{phrases[7]} the #{phrases[6]} the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
-#{preamble} the #{phrases[11]} the #{phrases[10]} the #{phrases[9]} the #{phrases[8]} the #{phrases[7]} the #{phrases[6]} the #{phrases[5]} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
+#{RhymeLine.new(0).to_s}
+#{RhymeLine.new(1).to_s}
+#{RhymeLine.new(2).to_s}
+#{RhymeLine.new(3).to_s}
+#{RhymeLine.new(4).to_s}
+#{RhymeLine.new(5).to_s}
+#{RhymeLine.new(6).to_s}
+#{RhymeLine.new(7).to_s}
+#{RhymeLine.new(8).to_s}
+#{RhymeLine.new(9).to_s}
+#{RhymeLine.new(10).to_s}
+#{RhymeLine.new(11).to_s}
 eos
 
 print rhyme
