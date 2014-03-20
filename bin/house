@@ -25,9 +25,21 @@ def preamble
   "This is"
 end
 
+class RhymePart
+  attr_accessor :phrase
+  def initialize(phrase)
+    self.phrase = phrase
+  end
+
+  def to_s
+    "the #{phrase}"
+  end
+end
+
+
 rhyme= <<-eos
-#{preamble} the #{phrases[0]}.#{pause}
-#{preamble} the #{phrases[1]} the #{phrases[0]}.#{pause}
+#{preamble} #{RhymePart.new(phrases[0])}.#{pause}
+#{preamble} #{RhymePart.new(phrases[1])} #{RhymePart.new(phrases[0])}.#{pause}
 #{preamble} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
 #{preamble} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
 #{preamble} the #{phrases[4]} the #{phrases[3]} the #{phrases[2]} the #{phrases[1]} the #{phrases[0]}.#{pause}
