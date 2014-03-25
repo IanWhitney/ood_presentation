@@ -1,37 +1,54 @@
 #!/usr/bin/env ruby
 
-PHRASES = [
-    "house that Jack built",
-    "malt that lay in",
-    "rat that ate",
-    "cat that killed",
-    "dog that worried",
-    "cow with the crumpled horn that tossed",
-    "maiden all forlorn that milked",
-    "man all tattered and torn that kissed",
-    "priest all shaven and shorn that married",
-    "rooster that crowed in the morn that woke",
-    "farmer sowing his corn that kept",
-    "horse and the hound and the horn that belonged to",
-  ]
+INCIDENTS = [
+    {actor: 'house', action: 'Jack built'},
+    {actor: 'malt', action: 'lay in'},
+    {actor: 'rat', action: 'ate'},
+    {actor: 'cat', action: 'killed'},
+    {actor: 'dog', action: 'worried'},
+    {actor: 'cow with the crumpled horn', action: 'tossed'},
+    {actor: 'maiden all forlorn', action: 'milked'},
+    {actor: 'man all tattered and torn', action: 'kissed'},
+    {actor: 'priest all shaven and shorn', action: 'married'},
+    {actor: 'rooster that crowed in the morn', action: 'woke'},
+    {actor: 'farmer sowing his corn', action: 'kept'},
+    {actor: 'horse and the hound and the horn', action: 'belonged to'},
+]
 
-class RhymePart
-  attr_accessor :phrase
-  def initialize(phrase)
-    self.phrase = phrase
-  end
-
-  def to_s
-    "the #{phrase}"
+class Incident
+  attr_accessor :actor, :action
+  def initialize(args)
+    self.actor = args[:actor]
+    self.action = args[:action]
   end
 end
 
-class RhymeLine
-  attr_accessor :verse_number, :phrases
+require 'forwardable'
+class Incidents
+  include Enumerable
+  extend Forwardable
+  def_delegators :collection, :each, :[]
+  def initialize(incidents=INCIDENTS)
+    build_incidents(incidents)
+  end
 
-  def initialize(verse_number, phrases)
-    self.verse_number = verse_number
-    self.phrases = phrases
+  def collection
+    @collection ||= []
+  end
+
+  private
+
+  def build_incidents(incidents)
+    incidents.each {|i| collection << Incident.new(i)}
+  end
+end
+
+class Verse
+  attr_accessor :number, :incidents
+
+  def initialize(number, incidents)
+    self.number = number
+    self.incidents = incidents
   end
 
   def to_s
@@ -47,20 +64,41 @@ class RhymeLine
   end
 
   def parts
-    (0..verse_number).inject("") {|ret, i|  " " + RhymePart.new(phrases[i]).to_s + ret}
+    (0..number).inject("") {|ret, i|  " the #{incidents[i].actor} that #{incidents[i].action}#{ret}"}
+  end
+end
+
+class Verses
+  attr_accessor :incidents
+  def self.build(incidents)
+    self.new(incidents).all
+  end
+
+  def initialize(incidents)
+    self.incidents = incidents
+  end
+
+  def all
+    concatenate_verses
+  end
+
+  private
+
+  def concatenate_verses(verses = "")
+    incidents.count.times {|i| verses << Verse.new(i,incidents).to_s}
+    verses
   end
 end
 
 class Rhyme
-  attr_accessor :phrases
-  def initialize(phrases=PHRASES)
-    self.phrases = phrases
+  attr_accessor :incidents
+  def initialize(incidents)
+    self.incidents = incidents
   end
 
   def say
-    phrases.each_index {|i| print RhymeLine.new(i,phrases)}
-    nil
+    Verses.build(incidents)
   end
 end
 
-print Rhyme.new.say
+print Rhyme.new(Incidents.new).say
