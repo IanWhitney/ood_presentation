@@ -118,7 +118,7 @@ end
 class VerseComponent
   include Enumerable
   extend Forwardable
-  def_delegators :collection, :zip, :each
+  def_delegators :collection, :zip, :each, :shuffle
   attr_accessor :collection
   def initialize(data)
     self.collection = data.map {|i| i[self.key]}
@@ -140,5 +140,5 @@ end
 actors = Actors.new(INCIDENTS)
 actions = Actions.new(INCIDENTS)
 
-incidents = Incidents.new(actors, actions)
+incidents = Incidents.new(actors.shuffle, actions.shuffle)
 print Rhyme.new(incidents).say
