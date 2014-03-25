@@ -115,7 +115,7 @@ class Rhyme
   end
 end
 
-class VerseComponent
+class VerseComponents
   include Enumerable
   extend Forwardable
   def_delegators :collection, :zip, :each, :shuffle
@@ -125,13 +125,13 @@ class VerseComponent
   end
 end
 
-class Actors < VerseComponent
+class Actors < VerseComponents
   def key
     :actor
   end
 end
 
-class Actions < VerseComponent
+class Actions < VerseComponents
   def key
     :action
   end
