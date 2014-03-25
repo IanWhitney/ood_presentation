@@ -118,10 +118,21 @@ end
 class VerseComponents
   include Enumerable
   extend Forwardable
-  def_delegators :collection, :zip, :each, :shuffle
+  def_delegators :collection, :zip, :each
   attr_accessor :collection
+
   def initialize(data)
     self.collection = data.map {|i| i[self.key]}
+  end
+
+  def shuffle!
+    collection.shuffle!
+    self
+  end
+
+  def end_with(element)
+    collection.unshift(collection.delete(element))
+    self
   end
 end
 
@@ -140,5 +151,8 @@ end
 actors = Actors.new(INCIDENTS)
 actions = Actions.new(INCIDENTS)
 
-incidents = Incidents.new(actors.shuffle, actions.shuffle)
+actors.shuffle!.end_with("house")
+actions.shuffle!.end_with("Jack built")
+
+incidents = Incidents.new(actors, actions)
 print Rhyme.new(incidents).say
