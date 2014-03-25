@@ -17,9 +17,9 @@ INCIDENTS = [
 
 class Incident
   attr_accessor :actor, :action
-  def initialize(args)
-    self.actor = args[:actor]
-    self.action = args[:action]
+  def initialize(actor, action)
+    self.actor = actor
+    self.action = action
   end
 end
 
@@ -28,8 +28,8 @@ class Incidents
   include Enumerable
   extend Forwardable
   def_delegators :collection, :each, :[]
-  def initialize(incidents)
-    build_incidents(incidents)
+  def initialize(actors, actions)
+    build_incidents(actors, actions)
   end
 
   def collection
@@ -38,8 +38,10 @@ class Incidents
 
   private
 
-  def build_incidents(incidents)
-    incidents.each {|i| collection << Incident.new(i)}
+  def build_incidents(actors, actions)
+    actors.zip(actions).each do |actor_action|
+      collection << Incident.new(actor_action[0], actor_action[1])
+    end
   end
 end
 
@@ -53,6 +55,8 @@ class Verse
   def to_s
     "#{preamble}#{parts}.#{pause}"
   end
+
+  private
 
   def preamble
     "This is"
@@ -111,5 +115,30 @@ class Rhyme
   end
 end
 
-incidents = Incidents.new(INCIDENTS)
+class VerseComponent
+  include Enumerable
+  extend Forwardable
+  def_delegators :collection, :zip, :each
+  attr_accessor :collection
+  def initialize(data)
+    self.collection = data.map {|i| i[self.key]}
+  end
+end
+
+class Actors < VerseComponent
+  def key
+    :actor
+  end
+end
+
+class Actions < VerseComponent
+  def key
+    :action
+  end
+end
+
+actors = Actors.new(INCIDENTS)
+actions = Actions.new(INCIDENTS)
+
+incidents = Incidents.new(actors, actions)
 print Rhyme.new(incidents).say
