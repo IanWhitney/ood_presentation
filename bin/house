@@ -28,7 +28,7 @@ class Incidents
   include Enumerable
   extend Forwardable
   def_delegators :collection, :each, :[]
-  def initialize(incidents=INCIDENTS)
+  def initialize(incidents)
     build_incidents(incidents)
   end
 
@@ -44,10 +44,9 @@ class Incidents
 end
 
 class Verse
-  attr_accessor :number, :incidents
+  attr_accessor :incidents
 
-  def initialize(number, incidents)
-    self.number = number
+  def initialize(incidents)
     self.incidents = incidents
   end
 
@@ -64,7 +63,18 @@ class Verse
   end
 
   def parts
-    (0..number).inject("") {|ret, i|  " the #{incidents[i].actor} that #{incidents[i].action}#{ret}"}
+    incidents.inject("") {|ret, i|  "#{VersePart.new(i)}#{ret}"}
+  end
+end
+
+class VersePart
+  attr_accessor :incident
+  def initialize(incident)
+    self.incident = incident
+  end
+
+  def to_s
+    " the #{incident.actor} that #{incident.action}"
   end
 end
 
@@ -85,7 +95,7 @@ class Verses
   private
 
   def concatenate_verses(verses = "")
-    incidents.count.times {|i| verses << Verse.new(i,incidents).to_s}
+    incidents.count.times {|i| verses << Verse.new(incidents[0..i]).to_s}
     verses
   end
 end
@@ -101,4 +111,5 @@ class Rhyme
   end
 end
 
-print Rhyme.new(Incidents.new).say
+incidents = Incidents.new(INCIDENTS)
+print Rhyme.new(incidents).say
