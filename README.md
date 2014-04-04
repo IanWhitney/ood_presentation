@@ -1,5 +1,12 @@
 Note: All of the below came originally from Sandi Metz and Katrina Owen and their class "Practical Object Oriented Design". I am repurposing their exercise for a couple of presentations that I'm giving.
 
+The presentation text is in script.md. The script is more of a series of speaking triggers for myself, so it's not the easiest thing to follow along with.
+
+The code is in bin/house
+
+
+Below is Sandi & Katrina's original readme.
+
 # The House that Jack Built
 
 Write the code that will output the text to the nursery rhyme

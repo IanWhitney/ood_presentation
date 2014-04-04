@@ -10,7 +10,7 @@ So I'm going to offer 3 paths:
 
 - A super-condensed, likely baffling design demo now
 - A git repository where we can collaborate on simple design problems
-- A group for reading and discussing foundational books of OOD design
+- A plan for reading and discussing foundational books of OOD design
 
 I'll cover the last two at the end, let's jump into the code.
 
@@ -18,13 +18,14 @@ Coding script:
 
   - Here's our problem. The customer wants us to print the lyrics to this nursery rhyme.
   - We've been provided an acceptance test. Let's get this to pass.
-  - [paste in heredoc]
+    - [features/house.feature](The test)
+  - Checkout cfd56862b1931701ef04e3feee772d5e88146528
   - Done!
   - Does this work?
     - Yes. By the definition of the test.
   - Is it well designed?
     - Well, what does that mean?
-  - Transparent, Reasonable, Usable, Exemplary
+  - Transparent, Reasonable, Usable, Exemplary (Sandi Metz)
     - Transparent: It is easy for me to see what this does and the effect of a change.
       - Sure. I'd call this transparent.
     - Reasonable: A change takes effort reasonable for its complexity.
@@ -56,40 +57,26 @@ Coding script:
       - Find things that are almost identical
       - Make them more identical
       - When they are identical, remove the duplication
-  - Let's live code this a bit.
   - Every stanza has this extra newline. Like a pause between stanzas. It's an easy extraction point.
-    - Write pause method.
-    - Run test.
-    - Implement.
-    - Run test.
-    - Show final result.
+    - Checkout 2704e2c4cacbac0ae40527e38882e6903c77acfb
   - Ok. I'm willing to admit that's dumb. It certainly doesn't look like a huge improvement.
   - But it isolates a repetitive aspect of our code and gives it a domain specific name. It lets us talk about it.
     - Isolate enough concepts and you'll start to see how they can be grouped.
     - Grouping of concepts is design
   - Let's take the next duplication. We can look at this and see that phrases are repeated in each line. Let's start removing that.
-    - Write phrases method with just ["house that Jack built"]
-    - Run tests.
-    - Implement.
-    - Run tests.
-    - Show final result.
+    - Checkout 0691a8660f237fe5aaecefa1f4430dcd566030c9
   - And we can see where this is going, right? Let's fast forward.
+    - Checkout cfa9e210d3fb0f5a504d575fab3bafc5cb8946dd
   - The structure, the algorithm of rhyme consruction, is becoming more clear. There's some ugly repetition in there that is easier to see now. Let's remove that.
-    - Write preamble
-    - Run test
-    - Implement
-    - Run test
+    - Checkout b06750b94f15f09b97e64d69d64a419088618e2a
   - And, though we certainly could have noticed this earlier, our refactoring has shown us some concepts and the rhyme-construction algorithm.
     - A preamble followed by a, for lack of a better word, Rhyme Part. The rhyme part just concatenates "the" and whatever phrase we care about.
   - We see a behavior that we're repeating. Repeated behavior is an object. This is a talk on OOD, so we should have an object.
-    - Write RhymePart
-    - Run test
-    - Implement
-    - Run test
+    - Checkout 35fd604540d804d99c900f66e8c33eeaf46e8f00
   - That's a single RhymePart, but we can see a bigger algorithm as well, there's a RhymeLine that has a preamble, puts out the correct phrases and then pauses.
-  - Move to RhymeLine
+    - Checkout 3196ea8e5fd3eb98d3700eb88673b25ac939ab16
   - And a further structure appears, the Rhyme
-    - Implement Rhyme
+    - Checkout 4373ffbee9c27e04fb1941028f66fb9c52f064a9
   - And now...I think we can stop.
     - There's some stuff in here I don't love, but I think we can call this "Good Enough"
     - TRUE
@@ -97,28 +84,30 @@ Coding script:
   - Then we get a call from the customer,
     - "Can we display the lines in a random order?"
     - And you can say, "Yes, no problem"
-      - Show implementation
-        print Rhyme.new(phrases.shuffle).say
-    - "Can each verse always end with 'the house that Jack built'?"
+
+```ruby
+print Rhyme.new(phrases.shuffle).say
+```
+
+  - "Can each verse always end with 'the house that Jack built'?"
     - You can say, "Yes, no problem"
-      - Show implementation
-        phrases = PHRASES.dup
-        first_element = phrases.shift
-        phrases = phrases.shuffle
-        phrases.unshift(first_element)
-        print Rhyme.new(phrases).say
+
+```ruby
+phrases = PHRASES.dup
+first_element = phrases.shift
+phrases = phrases.shuffle
+phrases.unshift(first_element)
+print Rhyme.new(phrases).say
+```
   - "Can we shuffle it so we get verses like 'the cat that Jack built'?"
       - And you say...
         - "Well,..."
-
-Next Steps
-
   - And that's what we do next. Refactor what we have until we can implement the next feature without further altering the class. Continue to do this and you'll have code that is Open to extension, but Closed to modification. You'll have code that you don't hate working with. It will no longer be Too Big To Succeed. It'll be too small to fail. It will be well designed.
 
 Design with Me
 
-  Fork this repository, each directory has a problem and a README. Follow the directions in the README and send me a pull request when your code works. Then we'll discuss and refactor.
+  Fork [this repository](https://github.com/IanWhitney/durham-2014-march/), each directory has a problem and a README. Follow the directions in the README and send me a pull request when your code works. Then we'll discuss and refactor.
 
 Read Slowly with Me
 
-I'm starting to think about a small reading group that will, very slowly, read some of the foundational books of design. Gang of Four, refactoring, etc. It'd require a time commitment, probably on weekends or maybe some week night. Read a chapter, get together every couple of weeks, discuss deeply. If you're interested, let me know.
+I'm starting to think about a small reading group that will, very slowly, read some of the foundational books of design. Nothing in this presentation is new. Most of it comes straight from books that are 20 years old, some of which we've read. But I know that I only skim these books. So maybe we should go back and read them slowly.
